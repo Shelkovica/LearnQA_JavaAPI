@@ -13,7 +13,6 @@ public class ExTest {
 
     @Test
     public void testEx5() {
-        Map<String, String > params = new HashMap<>();
         JsonPath response = RestAssured
                 .given()
                 .get ("https://playground.learnqa.ru/api/get_json_homework")
@@ -22,4 +21,23 @@ public class ExTest {
         String message = response.get("messages[1].message");
         System.out.println("Second message: "+message);
     }
+
+   /* @Test
+    public void testEx6() {
+       // Map<String, String > params = new HashMap<>();
+      //  Map<String, String> headers = new HashMap<>();
+        Response response = RestAssured
+                .given()
+                .redirects()
+                .follow(false)
+                .get ("https://playground.learnqa.ru/api/long_redirect")
+                .andReturn();
+
+       // response.print();
+        System.out.println(response.getCookies());
+        System.out.println(response.getHeaders());
+        System.out.println(response.getStatusCode());
+//response.prettyPrint();
+
+    }*/
 }
