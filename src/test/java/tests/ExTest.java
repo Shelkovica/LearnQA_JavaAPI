@@ -5,7 +5,7 @@ import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import lib.Assertions;
 import org.junit.jupiter.api.Test;
-
+import io.restassured.http.Headers;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -58,5 +58,15 @@ public class ExTest {
                 .andReturn();
         String expectedCookieValue = "hw_value";
         assertEquals(expectedCookieValue, response.getCookie("HomeWork"), "Received cookie with value: "+response.getCookie("HomeWork"));
+    }
+
+    @Test
+    public void testEx12() {
+        Response response = RestAssured
+                .given()
+                .get ("https://playground.learnqa.ru/api/homework_header")
+                .andReturn();
+        String expectedHeadersValue = "Some secret value";
+        assertEquals(expectedHeadersValue, response.getHeader("x-secret-homework-header"), "Received header with value: "+response.getHeader("x-secret-homework-header"));
     }
 }
