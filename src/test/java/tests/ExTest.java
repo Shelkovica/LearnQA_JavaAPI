@@ -1,13 +1,15 @@
+package tests;
+
 import io.restassured.RestAssured;
-import io.restassured.http.Header;
-import io.restassured.http.Headers;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
-
+import lib.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ExTest {
 
@@ -40,4 +42,10 @@ public class ExTest {
 //response.prettyPrint();
 
     }*/
+
+    @Test
+    public void testEx10() {
+    String checkString = "Какая-то строка!";
+    assertTrue(checkString.length()>15, "Length checkString no more than 15: Length checkString="+checkString.length());
+    }
 }

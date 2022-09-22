@@ -1,4 +1,4 @@
-//package test.java;
+package tests;//package test.java;
 import io.restassured.RestAssured;
 import io.restassured.http.Header;
 import io.restassured.http.Headers;
@@ -6,6 +6,8 @@ import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,6 +16,25 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class HelloWorldTest {
+    @ParameterizedTest
+    @ValueSource(strings = {"", "John", "Pete"})
+    public void testHelloMethodWithoutName(String name) {
+        Map<String, String> queryParams = new HashMap<>();
+        if(name.length()>0){
+            queryParams.put("name", name);
+        }
+
+        JsonPath response = RestAssured
+                .given()
+                .queryParams(queryParams)
+                .get ("https://playground.learnqa.ru/api/hello")
+                .jsonPath();
+        String answer = response.getString("answer");
+        String expectedName = (name.length() > 0 ) ? name: "someone";  //тернанрый оператор
+        assertEquals("Hello, "+expectedName, answer, "The answer is not expected");
+    }
+
+
     @Test
     public void testRestAssured() {
         Map<String, String > params = new HashMap<>();
@@ -127,5 +148,9 @@ public class HelloWorldTest {
         // assertTrue(response.statusCode() == 200, "Unexpected status code");
         assertEquals(404, response.statusCode(), "Unexpected status code");
     }
+
+
+
+
 }
 
