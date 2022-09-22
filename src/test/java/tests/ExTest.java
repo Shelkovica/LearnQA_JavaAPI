@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import java.util.HashMap;
 import java.util.Map;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ExTest {
@@ -47,5 +48,15 @@ public class ExTest {
     public void testEx10() {
     String checkString = "Какая-то строка!";
     assertTrue(checkString.length()>15, "Length checkString no more than 15: Length checkString="+checkString.length());
+    }
+
+    @Test
+    public void testEx11() {
+        Response response = RestAssured
+                .given()
+                .get ("https://playground.learnqa.ru/api/homework_cookie")
+                .andReturn();
+        String expectedCookieValue = "hw_value";
+        assertEquals(expectedCookieValue, response.getCookie("HomeWork"), "Received cookie with value: "+response.getCookie("HomeWork"));
     }
 }
