@@ -1,11 +1,16 @@
 package tests;
 
 import io.restassured.RestAssured;
+import io.restassured.http.Header;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import lib.Assertions;
 import org.junit.jupiter.api.Test;
 import io.restassured.http.Headers;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -69,4 +74,53 @@ public class ExTest {
         String expectedHeadersValue = "Some secret value";
         assertEquals(expectedHeadersValue, response.getHeader("x-secret-homework-header"), "Received header with value: "+response.getHeader("x-secret-homework-header"));
     }
+
+    @ParameterizedTest
+    /*@ValueSource(strings = {"Mozilla/5.0 (Linux; U; Android 4.0.2; en-us; Galaxy Nexus Build/ICL53F) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30",
+            "Mozilla/5.0 (iPad; CPU OS 13_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) CriOS/91.0.4472.77 Mobile/15E148 Safari/604.1",
+            "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)",
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.77 Safari/537.36 Edg/91.0.100.0",
+            "Mozilla/5.0 (iPad; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1"
+    })*/
+    @CsvSource(value = {"'Mozilla/5.0 (Linux; U; Android 4.0.2; en-us; Galaxy Nexus Build/ICL53F) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30', Mobile, No, Android",
+            "'Mozilla/5.0 (iPad; CPU OS 13_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) CriOS/91.0.4472.77 Mobile/15E148 Safari/604.1', Mobile, Chrome, iOS",
+            "'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)', Googlebot, Unknown, Unknown",
+            "'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.77 Safari/537.36 Edg/91.0.100.0', Web, Chrome, No",
+            "'Mozilla/5.0 (iPad; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1', Mobile, No, iPhone"
+    })
+    public void testEx13(String param_agent, String platform_expected, String browser_expected, String  device_expected) {
+
+        Map<String, String> queryParams = new HashMap<>();
+        queryParams.put("param_agent", param_agent);
+        queryParams.put("platform_expected", platform_expected);
+        queryParams.put("browser_expected", browser_expected);
+        queryParams.put("device_expected", device_expected);
+
+        JsonPath response = RestAssured
+                .given()
+                .header("User-Agent",param_agent )
+                .get ("https://playground.learnqa.ru/api/user_agent_check")
+                .jsonPath();
+        response.prettyPrint();
+
+        String platform = response.getJsonObject("platform");
+        String browser = response.getJsonObject("browser");
+        String device = response.getJsonObject("device");
+
+        System.out.println(param_agent);
+        if(!platform.equals(platform_expected)){
+            System.out.println("platform is wrong: "+platform +"; expected: "+platform_expected);
+        }
+        if(!browser.equals(browser_expected)){
+                    System.out.println("browser is wrong: "+browser +"; expected: "+browser_expected);
+        }
+        if(!device.equals(device_expected)){
+            System.out.println("device is wrong: "+platform +"; expected: "+device_expected);
+        }
+
+        assertTrue((platform.equals(platform_expected))&(browser.equals(browser_expected))&(device.equals(device_expected)) , "User Agent id wrong" );
+       }
+
+
+
 }
