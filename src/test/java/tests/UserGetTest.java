@@ -15,8 +15,6 @@ import java.util.Map;
 public class UserGetTest extends BaseTestCase {
 
     private  final ApiCoreRequests apiCoreRequests = new ApiCoreRequests();
-    String cookie;
-    String header;
 
     @Test
     @Description("This test get user without cookie and token")
