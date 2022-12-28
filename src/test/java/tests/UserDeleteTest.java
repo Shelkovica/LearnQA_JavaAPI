@@ -18,7 +18,6 @@ public class UserDeleteTest extends BaseTestCase {
     String cookie;
     String header;
     private  final ApiCoreRequests apiCoreRequests = new ApiCoreRequests();
-
     @Test
     @Description("This test failed deleted system user after auth")
     @DisplayName("Test deleted system user")
