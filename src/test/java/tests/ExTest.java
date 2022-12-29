@@ -1,10 +1,14 @@
 package tests;
 
+import io.qameta.allure.Description;
 import io.restassured.RestAssured;
 import io.restassured.http.Header;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
+import lib.ApiCoreRequests;
 import lib.Assertions;
+import lib.BaseTestCase;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import io.restassured.http.Headers;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -17,9 +21,13 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class ExTest {
+public class ExTest extends BaseTestCase {
+
+    private  final ApiCoreRequests apiCoreRequests = new ApiCoreRequests();
 
     @Test
+    @Description("This test fo")
+    @DisplayName("Test positive auth user")
     public void testEx5() {
         JsonPath response = RestAssured
                 .given()
@@ -30,10 +38,11 @@ public class ExTest {
         System.out.println("Second message: "+message);
     }
 
-   /* @Test
+    @Test
     public void testEx6() {
-       // Map<String, String > params = new HashMap<>();
-      //  Map<String, String> headers = new HashMap<>();
+
+        Map<String, String > params = new HashMap<>();
+        Map<String, String> headers = new HashMap<>();
         Response response = RestAssured
                 .given()
                 .redirects()
@@ -41,13 +50,10 @@ public class ExTest {
                 .get ("https://playground.learnqa.ru/api/long_redirect")
                 .andReturn();
 
-       // response.print();
-        System.out.println(response.getCookies());
-        System.out.println(response.getHeaders());
+        System.out.println(response.getHeader("Location"));
         System.out.println(response.getStatusCode());
-//response.prettyPrint();
 
-    }*/
+    }
 
     @Test
     public void testEx10() {
