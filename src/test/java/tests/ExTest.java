@@ -14,9 +14,10 @@ import io.restassured.http.Headers;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
-
+import java.lang.Thread;
 import java.util.HashMap;
 import java.util.Map;
+
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -82,6 +83,23 @@ public class ExTest extends BaseTestCase {
         }
         System.out.println(count_redirect);
 
+    }
+
+    @Test
+    public void testEx8() throws InterruptedException {
+
+        Response response = apiCoreRequests.makeGetRequestWithoutCookieAndToken("https://playground.learnqa.ru/ajax/api/longtime_job");
+        String token = response.jsonPath().get("token");
+        Integer seconds = response.jsonPath().get("seconds");
+
+        Response responseBeforeTask = apiCoreRequests.makeGetRequestWithoutCookieAndToken("https://playground.learnqa.ru/ajax/api/longtime_job?token="+token );
+        Assertions.assertJsonByName(responseBeforeTask, "status","Job is NOT ready" );
+        Thread.sleep((seconds+1)*1000);
+
+        Response responseAfterTask = apiCoreRequests.makeGetRequestWithoutCookieAndToken("https://playground.learnqa.ru/ajax/api/longtime_job?token="+token );
+
+        Assertions.assertJsonByName(responseAfterTask, "status","Job is ready" );
+        Assertions.assertJsonHasField(responseAfterTask, "result");
     }
 
     @Test
