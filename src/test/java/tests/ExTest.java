@@ -56,6 +56,35 @@ public class ExTest extends BaseTestCase {
     }
 
     @Test
+    public void testEx7() {
+
+        Map<String, String > params = new HashMap<>();
+        Map<String, String> headers = new HashMap<>();
+        int count_redirect = 0;
+        Response response = RestAssured
+                .given()
+                .redirects()
+                .follow(false)
+                .get ("https://playground.learnqa.ru/api/long_redirect")
+                .andReturn();
+        String new_url = response.getHeader("Location");
+        while(new_url !=null) {
+            System.out.println(new_url);
+            count_redirect = count_redirect+1 ;
+            Response responseNew = RestAssured
+                    .given()
+                    .redirects()
+                    .follow(false)
+                    .get (new_url)
+                    .andReturn();
+            new_url = responseNew.getHeader("Location");
+
+        }
+        System.out.println(count_redirect);
+
+    }
+
+    @Test
     public void testEx10() {
     String checkString = "Какая-то строка!";
     assertTrue(checkString.length()>15, "Length checkString no more than 15: Length checkString="+checkString.length());
