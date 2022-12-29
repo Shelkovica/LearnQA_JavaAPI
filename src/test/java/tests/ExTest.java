@@ -27,8 +27,8 @@ public class ExTest extends BaseTestCase {
     private  final ApiCoreRequests apiCoreRequests = new ApiCoreRequests();
 
     @Test
-    @Description("This test fo")
-    @DisplayName("Test positive auth user")
+    @Description("This test for ex5")
+    @DisplayName("Test parsing json")
     public void testEx5() {
         JsonPath response = RestAssured
                 .given()
@@ -40,6 +40,8 @@ public class ExTest extends BaseTestCase {
     }
 
     @Test
+    @Description("This test for ex6")
+    @DisplayName("Test redirect")
     public void testEx6() {
 
         Map<String, String > params = new HashMap<>();
@@ -57,6 +59,8 @@ public class ExTest extends BaseTestCase {
     }
 
     @Test
+    @Description("This test for ex7")
+    @DisplayName("Test long redirect")
     public void testEx7() {
 
         Map<String, String > params = new HashMap<>();
@@ -85,7 +89,10 @@ public class ExTest extends BaseTestCase {
 
     }
 
+
     @Test
+    @Description("This test for ex8")
+    @DisplayName("Test token")
     public void testEx8() throws InterruptedException {
 
         Response response = apiCoreRequests.makeGetRequestWithoutCookieAndToken("https://playground.learnqa.ru/ajax/api/longtime_job");
@@ -102,9 +109,10 @@ public class ExTest extends BaseTestCase {
         Assertions.assertJsonHasField(responseAfterTask, "result");
     }
 
-
     @ParameterizedTest
     @ValueSource(strings = {"123456","123456789","qwerty","password","1234567","12345678","12345","iloveyou","111111","123123","abc123","qwerty123","1q2w3e4r","admin","qwertyuiop","654321","555555","lovely","7777777","welcome","888888","princess","dragon","password1","123qwe", })
+    @Description("This test for ex9")
+    @DisplayName("Test find password")
     public void testEx9(String pass) {
         Map<String, String> query = new HashMap<>();
         query.put("login","super_admin");
@@ -129,12 +137,16 @@ public class ExTest extends BaseTestCase {
 
 
     @Test
+    @Description("This test for ex10")
+    @DisplayName("Test for short string")
     public void testEx10() {
     String checkString = "Какая-то строка!";
     assertTrue(checkString.length()>15, "Length checkString no more than 15: Length checkString="+checkString.length());
     }
 
     @Test
+    @Description("This test for ex11")
+    @DisplayName("Test for cookie")
     public void testEx11() {
         Response response = RestAssured
                 .given()
@@ -145,6 +157,8 @@ public class ExTest extends BaseTestCase {
     }
 
     @Test
+    @Description("This test for ex12")
+    @DisplayName("Test  for header")
     public void testEx12() {
         Response response = RestAssured
                 .given()
@@ -167,6 +181,8 @@ public class ExTest extends BaseTestCase {
             "'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.77 Safari/537.36 Edg/91.0.100.0', Web, Chrome, No",
             "'Mozilla/5.0 (iPad; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1', Mobile, No, iPhone"
     })
+    @Description("This test for ex13")
+    @DisplayName("Test user-agent")
     public void testEx13(String param_agent, String platform_expected, String browser_expected, String  device_expected) {
 
         Map<String, String> queryParams = new HashMap<>();
@@ -199,7 +215,4 @@ public class ExTest extends BaseTestCase {
 
         assertTrue((platform.equals(platform_expected))&(browser.equals(browser_expected))&(device.equals(device_expected)) , "User Agent id wrong" );
        }
-
-
-
 }

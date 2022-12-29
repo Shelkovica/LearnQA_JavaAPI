@@ -1,10 +1,12 @@
 package tests;//package test.java;
+import io.qameta.allure.Description;
 import io.restassured.RestAssured;
 import io.restassured.http.Header;
 import io.restassured.http.Headers;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -18,6 +20,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class HelloWorldTest {
     @ParameterizedTest
     @ValueSource(strings = {"", "John", "Pete"})
+    @Description("test Hello Method Without Name")
+    @DisplayName("test Hello Method Without Name")
     public void testHelloMethodWithoutName(String name) {
         Map<String, String> queryParams = new HashMap<>();
         if(name.length()>0){
@@ -50,8 +54,6 @@ public class HelloWorldTest {
         } else {
             System.out.println(name);
         }
-
-
     }
 
     @Test
@@ -132,6 +134,8 @@ public class HelloWorldTest {
     }
 
     @Test
+    @Description("test response code: 200")
+    @DisplayName("test response code: 200")
     public void testFor200() {
         Response response = RestAssured
                 .get ("https://playground.learnqa.ru/api/map")
@@ -141,6 +145,8 @@ public class HelloWorldTest {
     }
 
     @Test
+    @Description("test response code: 404")
+    @DisplayName("test response code: 404")
     public void testFor404() {
         Response response = RestAssured
                 .get ("https://playground.learnqa.ru/api/map1")

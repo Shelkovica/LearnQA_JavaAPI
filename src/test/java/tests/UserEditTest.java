@@ -2,6 +2,8 @@ package tests;
 
 
 import io.qameta.allure.Description;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Features;
 import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
@@ -20,6 +22,7 @@ public class UserEditTest extends BaseTestCase {
     private  final ApiCoreRequests apiCoreRequests = new ApiCoreRequests();
 
     @Test
+    @Features(value={@Feature(value="Login user"), @Feature(value="Create user"), @Feature(value="Edit user")})
     @Description("This test successfully edit user after auth")
     @DisplayName("Test positive edit user")
     public void testEditJustCreatedTest(){
@@ -58,6 +61,7 @@ public class UserEditTest extends BaseTestCase {
 
     //ex 17, #1
     @Test
+    @Features(value={@Feature(value="Login user"), @Feature(value="Create user"), @Feature(value="Edit user")})
     @Description("This test failed edit user without auth")
     @DisplayName("Test negative edit user: user without auth")
     public void testEditUserWithoutAuthTest(){
@@ -82,6 +86,9 @@ public class UserEditTest extends BaseTestCase {
 
     //ex 17, #2  v1 Редактируем, авторизовавшись под системным юзером
     @Test
+    @Features(value={@Feature(value="Login user"), @Feature(value="Create user"), @Feature(value="Edit user")})
+    @Description("This test failed edit user By system User")
+    @DisplayName("test Edit Just Created Test By system User")
     public void testEditJustCreatedTestByAnotherUser(){
         //GENERATE USER
         Map<String, String> userData = DataGenerator.getRegistrationData();
@@ -112,6 +119,9 @@ public class UserEditTest extends BaseTestCase {
 
     //ex 17, #2  v2 Редактируем, авторизовавшись под новым юзером
     @Test
+    @Features(value={@Feature(value="Login user"), @Feature(value="Create user"), @Feature(value="Edit user")})
+    @Description("This test failed edit user be another new user")
+    @DisplayName("test Edit Just Created Test By another new User")
     public void testEditJustCreatedTestByAnotherUserV2(){
         //GENERATE  FIRST USER
         Map<String, String> userData = DataGenerator.getRegistrationData();
@@ -149,6 +159,7 @@ public class UserEditTest extends BaseTestCase {
 
     //ex 17 #3
     @Test
+    @Features(value={@Feature(value="Login user"), @Feature(value="Login user"), @Feature(value="Create user"), @Feature(value="Edit user")})
     @Description("This test failed edit user after auth, email without @")
     @DisplayName("Test negative edit user: email without @")
     public void testEditJustCreatedOnInvalidEmailTest(){
@@ -182,6 +193,7 @@ public class UserEditTest extends BaseTestCase {
 
     //ex 17 #4
     @Test
+    @Features(value={@Feature(value="Login user"), @Feature(value="Create user"), @Feature(value="Edit user")})
     @Description("This test failed edit user after auth, name is small")
     @DisplayName("Test negative edit user: name is small")
     public void testEditJustCreatedOnInvalidNameTest(){

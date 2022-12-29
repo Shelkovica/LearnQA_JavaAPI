@@ -1,6 +1,8 @@
 package tests;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Features;
 import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
@@ -19,6 +21,7 @@ public class UserDeleteTest extends BaseTestCase {
     String header;
     private  final ApiCoreRequests apiCoreRequests = new ApiCoreRequests();
     @Test
+    @Features(value={@Feature(value="Login user"), @Feature(value="Delete user")})
     @Description("This test failed deleted system user after auth")
     @DisplayName("Test deleted system user")
     public void testDeletedSystemUser(){
@@ -44,6 +47,7 @@ public class UserDeleteTest extends BaseTestCase {
     }
 
     @Test
+    @Features(value={@Feature(value="Login user"), @Feature(value="Create user"), @Feature(value="Delete user"), @Feature(value="Get user")})
     @Description("This test success deleted just user after created")
     @DisplayName("Test deleted just user")
     public void testDeletedJustCreatedUser(){
@@ -78,6 +82,7 @@ public class UserDeleteTest extends BaseTestCase {
     }
 
     @Test
+    @Features(value={@Feature(value="Login user"), @Feature(value="Create user"), @Feature(value="Delete user"), @Feature(value="Get user")})
     @Description("This test failed deleted just user after created")
     @DisplayName("Test failed deleted just user")
     public void testDeletedJustCreatedUserBySecondUser(){

@@ -1,5 +1,6 @@
 package tests;
 
+import io.qameta.allure.Features;
 import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
@@ -45,6 +46,7 @@ public class UserAuthTest extends BaseTestCase {
     }
 
     @Test
+    @Features(value={@Feature(value="Login user")})
     @Description("This test successfully authorize user by email and password")
     @DisplayName("Test positive auth user")
     public void testAuthUser(){
@@ -55,9 +57,11 @@ public class UserAuthTest extends BaseTestCase {
 
     }
 
+
     @Description("This test checks authorization status w/o sending auth cookie or token")
     @DisplayName("Test negative auth user")
     @ParameterizedTest
+    @Features(value={@Feature(value="Login user")})
     @ValueSource(strings = {"cookie", "headers"})
     public void testNegativeAuthUser(String condition){
 
