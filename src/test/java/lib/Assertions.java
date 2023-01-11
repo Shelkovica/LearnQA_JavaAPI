@@ -1,6 +1,7 @@
 package lib;
 
 import io.qameta.allure.Step;
+
 import io.restassured.response.Response;
 import static org.hamcrest.Matchers.hasKey;
 import static org.hamcrest.Matchers.not;
